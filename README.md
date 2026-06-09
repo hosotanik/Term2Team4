@@ -22,7 +22,7 @@ sequenceDiagram
     participant DB as データベース (Dapper)
 
     rect rgb(240, 248, 255)
-        note right of User: 【GET】予約データ一覧の取得
+        note right of User: 【GET】予約済みデータ一覧の取得
         User->>Client: 画面を開くまたは日付を選択
         Client->>Server: HTTP GET /api/reservation
         Server->>DB: SQL実行 (SELECT)
