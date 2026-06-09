@@ -18,7 +18,7 @@
 sequenceDiagram
     autonumber
     participant Client as クライアント (フロントエンド)
-    participant Server as サーバー (ASP.NET Core)
+    participant Server as サーバー (ASP.NET Core API)
     participant DB as データベース (Dapper)
 
     rect rgb(240, 248, 255)
