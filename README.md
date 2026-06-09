@@ -35,7 +35,7 @@ sequenceDiagram
         note right of User: 【POST】予約データの追加
         User->>Client: データを入力して追加
         Client->>Server: HTTP POST /api/reservation
-        note over Server: 自動バリデーション
+        note over Server: バリデーション
         alt エラーあり
             Server-->>Client: HTTP 400 Bad Request
             Client->>User: エラーを画面に表示
