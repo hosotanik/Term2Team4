@@ -28,7 +28,7 @@ sequenceDiagram
         Server->>DB: SQL実行 (SELECT)
         DB-->>Server: 予約済みのデータリスト
         Server-->>Client: HTTP 200 OK
-        Client->>User: 指定した日付の表示
+        Client->>User: 指定した日の予約一覧を表示
     end
 
     rect rgb(255, 245, 238)
