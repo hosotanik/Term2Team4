@@ -1,0 +1,137 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "ReservationServer | v1",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:7119"
+    },
+    {
+      "url": "http://localhost:5204"
+    }
+  ],
+  "paths": {
+    "/api/Reservations": {
+      "get": {
+        "tags": [
+          "Reservations"
+        ],
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Reservations"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReservationCreate"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReservationCreate"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReservationCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Reservations/{id}": {
+      "delete": {
+        "tags": [
+          "Reservations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ReservationCreate": {
+        "required": [
+          "confrenceName",
+          "date",
+          "startTime",
+          "endTime",
+          "reservationName"
+        ],
+        "type": "object",
+        "properties": {
+          "confrenceName": {
+            "maxLength": 20,
+            "minLength": 0,
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "startTime": {
+            "type": "string",
+            "format": "time"
+          },
+          "endTime": {
+            "type": "string",
+            "format": "time"
+          },
+          "reservationName": {
+            "maxLength": 20,
+            "minLength": 0,
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Reservations"
+    }
+  ]
+}
