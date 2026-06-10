@@ -94,7 +94,7 @@ public class ReservationRepositry : IReservationRepositry
             {
 
 
-                var count = await connection.ExecuteAsync("DELETE FROM reservation WHERE Id = @Id", new { Id = id });
+                int count = await connection.ExecuteAsync("DELETE FROM reservation WHERE Id = @Id", new { Id = id });
 
                 return count > 0;
             }catch(Exception ex)
