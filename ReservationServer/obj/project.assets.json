@@ -1041,11 +1041,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Shibuyayuki\\Desktop\\ReservationServer\\ReservationServer.csproj",
+      "projectUniqueName": "C:\\Users\\Shibuyayuki\\Desktop\\Term2Team4\\ReservationServer\\ReservationServer.csproj",
       "projectName": "ReservationServer",
-      "projectPath": "C:\\Users\\Shibuyayuki\\Desktop\\ReservationServer\\ReservationServer.csproj",
+      "projectPath": "C:\\Users\\Shibuyayuki\\Desktop\\Term2Team4\\ReservationServer\\ReservationServer.csproj",
       "packagesPath": "C:\\Users\\Shibuyayuki\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Shibuyayuki\\Desktop\\ReservationServer\\obj\\",
+      "outputPath": "C:\\Users\\Shibuyayuki\\Desktop\\Term2Team4\\ReservationServer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
