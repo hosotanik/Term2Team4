@@ -29,6 +29,9 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Logging.ClearProviders();
+builder.Host.UseNLog();
+
 // Add services to the container.
 
 builder.Services.AddControllers();

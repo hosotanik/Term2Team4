@@ -8,6 +8,6 @@ public interface IReservationRepositry
 
     Task PostInsert(Reservation reservation);
 
-    Task DeleteAsync(int id);
+    Task<bool> DeleteAsync(int id);
 
 }
