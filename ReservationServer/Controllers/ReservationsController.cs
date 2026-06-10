@@ -24,9 +24,7 @@ public class ReservationsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetReservations([FromQuery] string date)
     {
-
-
-        var reservations = await _reservation.GetShowAsync(DateTime.Now);
+        var reservations = await _reservation.GetShowAsync(date);
 
         return Ok(reservations);
     }
@@ -45,8 +43,7 @@ public class ReservationsController : ControllerBase
             // logを入れる
         }
 
-        //var aaaa = _reservation.GetShowAsync(DateTime.Now);
-        var existingReservations = await _reservation.GetShowAsync(startTime.Date);
+        var existingReservations = await _reservation.GetShowAsync(input.Date);
 
 
 
@@ -60,7 +57,7 @@ public class ReservationsController : ControllerBase
 
         await _reservation.PostInsert(newInput);
 
-        return Ok();
+        return Created("", null);
     }
 
 
@@ -68,7 +65,6 @@ public class ReservationsController : ControllerBase
     public async Task<IActionResult> DeleteReservationsAsync(int id)
     {
         await _reservation.DeleteAsync(id);
-
         return Ok();
     
     }

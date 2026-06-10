@@ -4,7 +4,7 @@ namespace ReservationServer.Repositries;
 
 public interface IReservationRepositry
 {
-    Task<List<Reservation>> GetShowAsync(DateTime startDate);
+    Task<List<Reservation>> GetShowAsync(string startDate);
 
     Task PostInsert(Reservation reservation);
 

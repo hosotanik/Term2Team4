@@ -18,7 +18,7 @@ public class ReservationRepositry : IReservationRepositry
 
     private List<Reservation> reservations;
 
-    public async Task<List<Reservation>> GetShowAsync(DateTime startDate)
+    public async Task<List<Reservation>> GetShowAsync(string startDate)
     {
 
         using (var connection = new SqlConnection(connectionString))
@@ -28,10 +28,11 @@ public class ReservationRepositry : IReservationRepositry
                             start_date AS StartDate,
                             end_date AS EndDate,
                             reservation_name AS ReservationName
-                            FROM reservation";
+                            FROM reservation
+                            WHERE CAST(start_date AS DATE) = @TargetDate";
 
             reservations = ( await connection
-                .QueryAsync<Reservation>(sql)
+                .QueryAsync<Reservation>(sql, new { TargetDate = startDate })
                 ).ToList();
 
             return reservations;
