@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Shibuyayuki\\Desktop\\Term2Team4\\ReservationServer\\ReservationServer.csproj": {}
+    "C:\\Users\\khosotani\\Desktop\\Term2Team4\\ReservationServer\\ReservationServer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Shibuyayuki\\Desktop\\Term2Team4\\ReservationServer\\ReservationServer.csproj": {
+    "C:\\Users\\khosotani\\Desktop\\Term2Team4\\ReservationServer\\ReservationServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Shibuyayuki\\Desktop\\Term2Team4\\ReservationServer\\ReservationServer.csproj",
+        "projectUniqueName": "C:\\Users\\khosotani\\Desktop\\Term2Team4\\ReservationServer\\ReservationServer.csproj",
         "projectName": "ReservationServer",
-        "projectPath": "C:\\Users\\Shibuyayuki\\Desktop\\Term2Team4\\ReservationServer\\ReservationServer.csproj",
-        "packagesPath": "C:\\Users\\Shibuyayuki\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Shibuyayuki\\Desktop\\Term2Team4\\ReservationServer\\obj\\",
+        "projectPath": "C:\\Users\\khosotani\\Desktop\\Term2Team4\\ReservationServer\\ReservationServer.csproj",
+        "packagesPath": "C:\\Users\\khosotani\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\khosotani\\Desktop\\Term2Team4\\ReservationServer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Shibuyayuki\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\khosotani\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -45,7 +45,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net10.0": {
@@ -96,7 +96,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.202/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
