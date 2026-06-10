@@ -96,7 +96,7 @@
     "schemas": {
       "ReservationCreate": {
         "required": [
-          "confrenceName",
+          "conferenceName",
           "date",
           "startTime",
           "endTime",
@@ -104,7 +104,7 @@
         ],
         "type": "object",
         "properties": {
-          "confrenceName": {
+          "conferenceName": {
             "maxLength": 20,
             "minLength": 0,
             "type": "string"
