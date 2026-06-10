@@ -14,7 +14,7 @@
 **テスト項目作成: 細谷・細谷**  
 **クライアント側: 細谷**  
 **サーバ側: 渋谷**  
-**テスト実施: 細谷・渋谷**
+**テスト実施: 細谷・渋谷**  
 
 ## 処理の流れ
 ```mermaid
@@ -61,5 +61,14 @@ sequenceDiagram
     end
 ```
 
+## テーブル設計 (reservation) 
+| カラム名 | データ型 | 制約 | 備考|
+| ---- | ---- | ---- | ---- |
+| id | INT | PRIMARY KEY | 自動採番 |
+| conference_name | NVARCHAR(20) | NOT NULL |
+| start_at | DATETIME | NOT NULL |
+| end_at | DATETIME | NOT NULL |
+| reservation_name | NVARCHAR(20) | NOT NULL |
+  
 
 
