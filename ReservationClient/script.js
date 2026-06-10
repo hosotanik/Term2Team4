@@ -35,7 +35,7 @@ function filterDisplay() {
      return `
      <tr>
      <td><strong>${item.conferenceName}</strong></td> 
-     <td>${item.startDate.split('T')[1].slice(0, 5)} - ${item.endDate.split('T')[1].slice(0, 5)}</td> 
+     <td>${item.startAt.split('T')[1].slice(0, 5)} - ${item.endAt.split('T')[1].slice(0, 5)}</td> 
      <td>${item.reservationName}</td> 
      <td><button class="btn btn-danger" onclick="deleteReservation(${item.id})">削除</button></td> </tr> `;
      }).join(''); 

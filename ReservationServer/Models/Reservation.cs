@@ -8,10 +8,10 @@ public class Reservation
     public string ConferenceName { get; set; }
 
 
-    public DateTime StartDate { get; set; }
+    public DateTime StartAt { get; set; }
 
 
-    public DateTime EndDate { get; set; }
+    public DateTime EndAt { get; set; }
 
 
     public string ReservationName { get; set; }

@@ -8,7 +8,7 @@ public class ReservationCreate
 {
     [Required]
     [StringLength(20)]
-    public string ConfrenceName { get; set; }
+    public string ConferenceName { get; set; }
     
 
     [Required]
