@@ -1,5 +1,6 @@
 const API_URL = 'https://localhost:7119/api/reservations';
 let allReservations = [];
+let pollingTimer = null; 
 const today = new Date().toLocaleDateString("ja-JP", { timeZone: "Asia/Tokyo" ,
         year: "numeric",  // 年を数字で（2026）
         month: "2-digit", // 月を2桁で（06）
@@ -21,8 +22,25 @@ function initApp() {
     document.getElementById('displayDate').value = today; 
     document.getElementById('reservationDate').value = today; 
     loadReservations(); 
+    
+    // ポーリングの開始（例: 5000ミリ秒 = 5秒ごと）
+    startPolling(5000);
 } 
 
+// ポーリングを開始する関数
+function startPolling(intervalMs) {
+    // 既存のタイマーがあれば二重起動を防ぐためにクリア
+    if (pollingTimer) clearInterval(pollingTimer);
+    
+    pollingTimer = setInterval(() => {
+        loadReservations();
+    }, intervalMs);
+}
+
+// 画面が閉じられたり遷移したりした際にタイマーを解放（メモリリーク防止）
+window.addEventListener('beforeunload', () => {
+    if (pollingTimer) clearInterval(pollingTimer);
+});
 function filterDisplay() { 
      const targetDate = document.getElementById('displayDate').value; 
      const tbody = document.getElementById('reservationList'); 
