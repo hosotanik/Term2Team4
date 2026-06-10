@@ -7,7 +7,7 @@
     <title>会議室予約システム</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-default bg-dark">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -19,7 +19,7 @@
         <div class="col-md-8">
             <div class="card mb-3 card-body">
                 <label class="form-label">表示する日付を選択</label>
-                <input type="date" id="display-date" class="form-control" onchange="filterDisplay()" min="1753-01-01" max="9999-12-31">
+                <input type="date" id="displayDate" class="form-control" onchange="filterDisplay()" min="1753-01-01" max="9999-12-31">
             </div>
             <table class="table table-bordered table-striped">
                 <thead class="table-secondary">
@@ -30,17 +30,17 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody id="reservation-list"></tbody>
+                <tbody id="reservationList"></tbody>
             </table>
-            <div id="message-area"></div>
+            <div id="messageArea"></div>
         </div>
         <div class="col-md-4">
             <div class="card card-body">
                 <h3 class="card-title mb-3">新規予約</h3>
-                <form id="booking-form">
+                <form id="reservationForm">
                     <div class="mb-3">
                         <label class="form-label">会議室名</label>
-                        <select id="roomName" class="form-select">
+                        <select id="conferenceName" class="form-select">
                             <option value="会議室A">会議室A</option>
                             <option value="会議室B">会議室B</option>
                             <option value="会議室C">会議室C</option>
@@ -48,7 +48,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">利用日</label>
-                        <input type="date" id="bookingDate" class="form-control" max="9999-12-31" required>
+                        <input type="date" id="reservationDate" class="form-control" max="9999-12-31" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">開始時間</label>
@@ -60,7 +60,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">予約者名</label>
-                        <input type="text" id="reservedBy" class="form-control" placeholder="例：細谷" maxlength="20" pattern=".*\S+.*" required>
+                        <input type="text" id="reservationName" class="form-control" placeholder="例：細谷" maxlength="20" pattern=".*\S+.*" required>
                     </div>
                     <button type="submit" class="btn btn-primary">
                         予約する
@@ -69,14 +69,11 @@
             </div>
         </div>
     </div>
-    <footer class="bg-dark fixed-bottom">
-        <div class='container mt-5'>
-            <div class='mx-auto text-white'>
-    	        <p>Copyright © sample All Rights Reserved.</p>
-    	    </div>
+    <footer class="bg-dark mt-auto py-3">
+        <div class="container text-center text-white">
+            <p class="mb-0">Copyright © sample All Rights Reserved.</p>
         </div>
     </footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.min.js"></script>
     <script src="./script.js"></script>
 </body>
 </html>

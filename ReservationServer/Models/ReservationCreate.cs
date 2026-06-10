@@ -12,7 +12,7 @@ public class ReservationCreate
     
 
     [Required]
-    [Range(typeof(DateTime),"1753-01-01","9999-12-31")]
+    [Range(typeof(DateOnly),"1753-01-01","9999-12-31")]
     public string Date { get; set; }
 
 
