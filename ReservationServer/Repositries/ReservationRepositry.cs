@@ -1,19 +1,22 @@
-﻿using ReservationServer.Models;
-using System.Diagnostics.CodeAnalysis;
-using Dapper;
+﻿using Dapper;
 using Microsoft.Data.SqlClient;
+using ReservationServer.Controllers;
+using ReservationServer.Models;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ReservationServer.Repositries;
 
 public class ReservationRepositry : IReservationRepositry
 {
-
+    private readonly ILogger<ReservationsController> _logger;
     private readonly IConfiguration _config;
     private readonly string connectionString;
-    public ReservationRepositry(IConfiguration config)
+    public ReservationRepositry(IConfiguration config, ILogger<ReservationsController> logger)
     {
         _config = config;
         connectionString = _config.GetConnectionString("DefaultConnection");
+        _logger = logger;
+
     }
 
     private List<Reservation> reservations;
@@ -23,7 +26,11 @@ public class ReservationRepositry : IReservationRepositry
 
         using (var connection = new SqlConnection(connectionString))
         {
-            var sql = @"SELECT id AS Id,
+            try
+            {
+
+
+                var sql = @"SELECT id AS Id,
                             conference_name AS ConferenceName,
                             start_at AS StartAt,
                             end_at AS EndAt,
@@ -31,12 +38,17 @@ public class ReservationRepositry : IReservationRepositry
                             FROM reservation
                             WHERE CAST(start_at AS DATE) = @TargetDate";
 
-            reservations = ( await connection
-                .QueryAsync<Reservation>(sql, new { TargetDate = startDate })
-                ).ToList();
+                reservations = (await connection
+                    .QueryAsync<Reservation>(sql, new { TargetDate = startDate })
+                    ).ToList();
 
-            return reservations;
-
+                return reservations;
+            }
+            catch (Exception ex) 
+            {
+                _logger.LogError(ex,"予約一覧取得失敗");
+                throw;
+            }
         }
     }
 
@@ -44,7 +56,11 @@ public class ReservationRepositry : IReservationRepositry
     {
         using (var connection = new SqlConnection(connectionString))
         {
-            var sql = @"INSERT INTO reservation
+            try
+            {
+
+
+                var sql = @"INSERT INTO reservation
                             (
                                 conference_name,
                                 start_at,
@@ -59,16 +75,33 @@ public class ReservationRepositry : IReservationRepositry
                                 @ReservationName
                             )";
 
-            await connection.ExecuteAsync(sql, reservation);
+                await connection.ExecuteAsync(sql, reservation);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "予約登録失敗");
+                throw;
+            }
         }
 
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
         using (var connection = new SqlConnection(connectionString))
         {
-           await connection.ExecuteAsync("DELETE FROM reservation WHERE Id = @Id", new { Id = id });
+            try
+            {
+
+
+                var count = await connection.ExecuteAsync("DELETE FROM reservation WHERE Id = @Id", new { Id = id });
+
+                return count > 0;
+            }catch(Exception ex)
+            {
+                _logger.LogError(ex, "削除失敗");
+                throw;
+            }
         }
 
     }
