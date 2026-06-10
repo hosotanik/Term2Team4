@@ -49,9 +49,9 @@ public class ReservationsController : ControllerBase
 
         Reservation newInput = new()
         {
-            ConferenceName = input.ConfrenceName,
-            StartDate = startTime,
-            EndDate = endTime,
+            ConferenceName = input.ConferenceName,
+            StartAt = startTime,
+            EndAt = endTime,
             ReservationName = input.ReservationName,
         };
 

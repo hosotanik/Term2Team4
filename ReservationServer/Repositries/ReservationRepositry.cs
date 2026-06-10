@@ -25,11 +25,11 @@ public class ReservationRepositry : IReservationRepositry
         {
             var sql = @"SELECT id AS Id,
                             conference_name AS ConferenceName,
-                            start_date AS StartDate,
-                            end_date AS EndDate,
+                            start_at AS StartAt,
+                            end_at AS EndAt,
                             reservation_name AS ReservationName
                             FROM reservation
-                            WHERE CAST(start_date AS DATE) = @TargetDate";
+                            WHERE CAST(start_at AS DATE) = @TargetDate";
 
             reservations = ( await connection
                 .QueryAsync<Reservation>(sql, new { TargetDate = startDate })
@@ -47,15 +47,15 @@ public class ReservationRepositry : IReservationRepositry
             var sql = @"INSERT INTO reservation
                             (
                                 conference_name,
-                                start_date,
-                                end_date,
+                                start_at,
+                                end_at,
                                 reservation_name
                             )
                             VALUES
                             (
                                 @ConferenceName,
-                                @StartDate,
-                                @EndDate,
+                                @StartAt,
+                                @EndAt,
                                 @ReservationName
                             )";
 
