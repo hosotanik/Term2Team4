@@ -7,7 +7,6 @@ namespace ReservationServer.Models;
 public class ReservationCreate
 {
     [Required]
-    [StringLength(20)]
     public string ConferenceName { get; set; }
     
 
