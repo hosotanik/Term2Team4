@@ -45,7 +45,7 @@ sequenceDiagram
         else 正常
             Server->>DB: SQL実行 (INSERT)
             DB-->>Server: 挿入成功
-            Server-->>Client: HTTP 200 OK
+            Server-->>Client: HTTP 201 Created
             Client->>User: 追加した行を画面に即座に反映
         end
     end
