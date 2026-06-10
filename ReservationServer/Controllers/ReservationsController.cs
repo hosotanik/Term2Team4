@@ -49,12 +49,18 @@ public class ReservationsController : ControllerBase
 
             DateTime startTime = reservationDate.ToDateTime(input.StartTime);
             DateTime endTime = reservationDate.ToDateTime(input.EndTime);
+            string[] allowedRooms = { "会議室A", "会議室B", "会議室C" };
 
-        
-
-            if(reservationDate < DateOnly.FromDateTime(DateTime.Today))
+            if (!allowedRooms.Contains(input.ConferenceName))
             {
-                _logger.LogWarning("過去日の予約が指定されました。");
+                _logger.LogWarning("存在しない会議室を指定されました");
+                return BadRequest("存在する会議室を選択してください");
+            }
+
+
+            if (reservationDate < DateOnly.FromDateTime(DateTime.Today))
+            {
+                _logger.LogWarning("過去日の予約が指定されました");
                 return BadRequest("予約日は今日以降を指定してください");
             }
 
@@ -62,7 +68,6 @@ public class ReservationsController : ControllerBase
             {
                 _logger.LogWarning("不正な予約時間です");
                 return BadRequest("終了時刻は開始時刻以降にしてください");
-                // logを入れる
             }
 
             var existingReservations = await _reservation.GetShowAsync(input.Date);
@@ -75,8 +80,8 @@ public class ReservationsController : ControllerBase
 
             if (isOverlapping)
             {
-            _logger.LogWarning("予約重複");
-            return BadRequest("指定された時間帯は、既に他の予約が入っています。");
+                _logger.LogWarning("予約重複");
+                return BadRequest("指定された時間帯は、既に他の予約が入っています。");
             }
 
 
