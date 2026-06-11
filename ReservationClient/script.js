@@ -44,7 +44,6 @@ window.addEventListener('beforeunload', () => {
 });
 
 function filterDisplay() { 
-    const targetDate = document.getElementById('displayDate').value; 
     const selectedData = allReservations 
     if (selectedData.length === 0) { 
         tbody.innerHTML = `<tr><td colspan="4">選択された日付（${targetDate}）の予約はありません。</td></tr>`;       
