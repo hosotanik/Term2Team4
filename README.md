@@ -74,8 +74,6 @@ sequenceDiagram
 ## データクラス設計
 ### Reservation.cs
 ```csharp
-namespace ReservationServer.Models;
-
 public class Reservation
 {
     public int Id { get; set; }
@@ -96,12 +94,6 @@ public class Reservation
 
 ### ReservationCreate.cs
 ```csharp
-using System.ComponentModel.DataAnnotations;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-
-namespace ReservationServer.Models;
-
 public class ReservationCreate
 {
     [Required]
