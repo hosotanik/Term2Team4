@@ -3,9 +3,9 @@ let allReservations = [];
 let pollingTimer = null; 
 const tbody = document.getElementById('reservationList'); 
 const today = new Date().toLocaleDateString("ja-JP", { timeZone: "Asia/Tokyo" ,
-        year: "numeric",  // 年を数字で（2026）
-        month: "2-digit", // 月を2桁で（06）
-        day: "2-digit"    // 日を2桁で（08）
+        year: "numeric",  
+        month: "2-digit", 
+        day: "2-digit"    
     })
     .replaceAll('/', '-');
 document.getElementById('reservationDate').min = today;
@@ -24,7 +24,7 @@ function initApp() {
     document.getElementById('reservationDate').value = today; 
     loadReservations(); 
     
-    // ポーリングの開始（例: 5000ミリ秒 = 5秒ごと）
+    // ポーリングの開始
     startPolling(5000);
 } 
 
@@ -38,7 +38,7 @@ function startPolling(intervalMs) {
     }, intervalMs);
 }
 
-// 画面が閉じられたり遷移したりした際にタイマーを解放（メモリリーク防止）
+// 画面が閉じられたり遷移したりした際にタイマーを解放
 window.addEventListener('beforeunload', () => {
     if (pollingTimer) clearInterval(pollingTimer);
 });
@@ -66,7 +66,7 @@ async function loadReservations() {
         return; 
     }
     const displayDate = dateInput.value;
-    //clearMessage();
+
     try {
         // コントローラーの [FromQuery] DateOnly date に合わせてパラメータを付与
         const response = await fetch(`${API_URL}?date=${displayDate}`, {
@@ -85,7 +85,7 @@ async function loadReservations() {
 }
 
 async function createReservation(event) {
-    // フォームのデフォルトの画面リロードを防止
+    // 画面リロードを防止
     event.preventDefault(); 
     clearMessage();
 
@@ -101,7 +101,7 @@ async function createReservation(event) {
         return timeStr.split(':').length === 2 ? `${timeStr}:00` : timeStr;
     };
 
-    // // C#の「ReservationCreate」に対応
+    // データクラス「ReservationCreate」に対応
     const bodyData = {
         conferenceName: conferenceName, 
         date: reservationDate,
@@ -159,7 +159,6 @@ async function deleteReservation(id) {
 // 表示日付（display-date）が変更されたら、自動でその日の予約一覧をリロードする
 document.getElementById('displayDate').addEventListener('blur', loadReservations);
 
-// クリックしたらcreateReservationを読み込む
 const Form = document.getElementById('reservationForm');
 if (Form){
     Form.addEventListener('submit', createReservation);
