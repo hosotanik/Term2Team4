@@ -44,58 +44,56 @@ public class ReservationsController : ControllerBase
         catch
         {
             _logger.LogError("予約一覧取得失敗");
-            return StatusCode(500 , "予約一覧を取得できませんでした");
+            return StatusCode(500, "予約一覧を取得できませんでした");
         }
     }
 
 
     [HttpPost]
-    public async Task<IActionResult> PostReservationsAsync([FromBody]ReservationCreate input)
+    public async Task<IActionResult> PostReservationsAsync([FromBody] ReservationCreate input)
     {
+        // 年月日と時刻を結合してDateTimeへ
+        DateOnly reservationDate = DateOnly.Parse(input.Date);
+        DateTime startTime = reservationDate.ToDateTime(input.StartTime);
+        DateTime endTime = reservationDate.ToDateTime(input.EndTime);
+        string[] allowedRooms = { "会議室A", "会議室B", "会議室C" };
+
+        if (!allowedRooms.Contains(input.ConferenceName))
+        {
+            _logger.LogWarning("存在しない会議室を指定されました");
+            return BadRequest("存在する会議室を選択してください");
+        }
+
+
+        if (reservationDate < DateOnly.FromDateTime(DateTime.Today))
+        {
+            _logger.LogWarning("過去日の予約が指定されました");
+            return BadRequest("予約日は今日以降を指定してください");
+        }
+
+        // 開始時刻より終了時刻が後であること
+        if (startTime >= endTime)
+        {
+            _logger.LogWarning("不正な予約時間です");
+            return BadRequest("終了時刻は開始時刻以降にしてください");
+        }
+
+        // 予約情報を取得
+        var existingReservations = await _reservation.GetShowAsync(input.Date);
+
+        // 同じ会議室で予約が重複してないか判別
+        bool isOverlapping = existingReservations.Any(r =>
+        input.ConferenceName == r.ConferenceName &&
+        startTime < r.EndAt &&
+        endTime > r.StartAt);
+
+        if (isOverlapping)
+        {
+            _logger.LogWarning("予約重複");
+            return BadRequest("指定された時間帯は、既に他の予約が入っています。");
+        }
         try
         {
-            // 年月日と時刻を結合してDateTimeへ
-            DateOnly reservationDate = DateOnly.Parse(input.Date);
-
-            DateTime startTime = reservationDate.ToDateTime(input.StartTime);
-            DateTime endTime = reservationDate.ToDateTime(input.EndTime);
-            string[] allowedRooms = { "会議室A", "会議室B", "会議室C" };
-
-            if (!allowedRooms.Contains(input.ConferenceName))
-            {
-                _logger.LogWarning("存在しない会議室を指定されました");
-                return BadRequest("存在する会議室を選択してください");
-            }
-
-
-            if (reservationDate < DateOnly.FromDateTime(DateTime.Today))
-            {
-                _logger.LogWarning("過去日の予約が指定されました");
-                return BadRequest("予約日は今日以降を指定してください");
-            }
-
-            // 開始時刻より終了時刻が後であること
-            if(startTime >= endTime)
-            {
-                _logger.LogWarning("不正な予約時間です");
-                return BadRequest("終了時刻は開始時刻以降にしてください");
-            }
-
-            // 予約情報を取得
-            var existingReservations = await _reservation.GetShowAsync(input.Date);
-
-            // 同じ会議室で予約が重複してないか判別
-            bool isOverlapping = existingReservations.Any(r =>
-            input.ConferenceName == r.ConferenceName &&
-            startTime < r.EndAt &&
-            endTime > r.StartAt);
-
-            if (isOverlapping)
-            {
-                _logger.LogWarning("予約重複");
-                return BadRequest("指定された時間帯は、既に他の予約が入っています。");
-            }
-
             // 登録用のエンティティを作成
             Reservation newInput = new()
             {
@@ -140,6 +138,6 @@ public class ReservationsController : ControllerBase
             _logger.LogError("削除失敗");
             return StatusCode(500, "削除失敗しました");
         }
-    
+
     }
 }
