@@ -100,10 +100,7 @@ public class ReservationsController : ControllerBase
                 ReservationName = input.ReservationName,
             };
 
-        
-
             await _reservation.PostInsert(newInput);
-
 
             _logger.LogInformation("予約登録成功");
             return Created("", null);

@@ -23,13 +23,10 @@ public class ReservationRepositry : IReservationRepositry
 
     public async Task<List<Reservation>> GetShowAsync(string startDate)
     {
-
         using (var connection = new SqlConnection(connectionString))
         {
             try
             {
-
-
                 var sql = @"SELECT id AS Id,
                             conference_name AS ConferenceName,
                             start_at AS StartAt,
@@ -58,8 +55,6 @@ public class ReservationRepositry : IReservationRepositry
         {
             try
             {
-
-
                 var sql = @"INSERT INTO reservation
                             (
                                 conference_name,
@@ -92,12 +87,11 @@ public class ReservationRepositry : IReservationRepositry
         {
             try
             {
-
-
                 int count = await connection.ExecuteAsync("DELETE FROM reservation WHERE Id = @Id", new { Id = id });
 
                 return count > 0;
-            }catch(Exception ex)
+            }
+            catch(Exception ex)
             {
                 _logger.LogError(ex, "削除失敗");
                 throw;
