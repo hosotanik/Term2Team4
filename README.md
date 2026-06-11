@@ -1,5 +1,5 @@
 # 会議室予約システム
-<img width="1500" height="700" alt="Image" src="https://github.com/user-attachments/assets/c87543d5-a01f-40a0-bf80-f8894074eb57" />
+<img width="1600" height="800" alt="Image" src="https://github.com/user-attachments/assets/f193b8f8-2a4f-4ae1-b13e-c7b645f80984" />
 
 ## 実装した機能 
 1. **予約追加機能**  
