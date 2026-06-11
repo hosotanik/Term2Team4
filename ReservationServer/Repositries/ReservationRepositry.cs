@@ -27,13 +27,14 @@ public class ReservationRepositry : IReservationRepositry
         {
             try
             {
+                // DateTimeを日付だけに変換、stringを自動変換したのを比較
                 var sql = @"SELECT id AS Id,
                             conference_name AS ConferenceName,
                             start_at AS StartAt,
                             end_at AS EndAt,
                             reservation_name AS ReservationName
                             FROM reservation
-                            WHERE CAST(start_at AS DATE) = @TargetDate";
+                            WHERE CAST(start_at AS DATE) = @TargetDate;";
 
                 reservations = (await connection
                     .QueryAsync<Reservation>(sql, new { TargetDate = startDate })
@@ -68,7 +69,7 @@ public class ReservationRepositry : IReservationRepositry
                                 @StartAt,
                                 @EndAt,
                                 @ReservationName
-                            )";
+                            );";
 
                 await connection.ExecuteAsync(sql, reservation);
             }
@@ -87,7 +88,7 @@ public class ReservationRepositry : IReservationRepositry
         {
             try
             {
-                int count = await connection.ExecuteAsync("DELETE FROM reservation WHERE Id = @Id", new { Id = id });
+                int count = await connection.ExecuteAsync("DELETE FROM reservation WHERE Id = @Id;", new { Id = id });
 
                 return count > 0;
             }

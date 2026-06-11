@@ -24,6 +24,7 @@ public class ReservationsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetReservations([FromQuery] string date)
     {
+
         if (DateTime.Parse(date) < new DateTime(2026, 6, 9))
         {
             _logger.LogWarning("不正な日付が指定されました");
@@ -34,6 +35,7 @@ public class ReservationsController : ControllerBase
         {
             _logger.LogInformation("予約一覧取得開始");
 
+            // 指定日の予約一覧を取得
             var reservations = await _reservation.GetShowAsync(date);
 
             _logger.LogInformation("予約一覧取得成功");
@@ -52,6 +54,7 @@ public class ReservationsController : ControllerBase
     {
         try
         {
+            // 年月日と時刻を結合してDateTimeへ
             DateOnly reservationDate = DateOnly.Parse(input.Date);
 
             DateTime startTime = reservationDate.ToDateTime(input.StartTime);
@@ -71,15 +74,17 @@ public class ReservationsController : ControllerBase
                 return BadRequest("予約日は今日以降を指定してください");
             }
 
+            // 開始時刻より終了時刻が後であること
             if(startTime >= endTime)
             {
                 _logger.LogWarning("不正な予約時間です");
                 return BadRequest("終了時刻は開始時刻以降にしてください");
             }
 
+            // 予約情報を取得
             var existingReservations = await _reservation.GetShowAsync(input.Date);
 
-
+            // 同じ会議室で予約が重複してないか判別
             bool isOverlapping = existingReservations.Any(r =>
             input.ConferenceName == r.ConferenceName &&
             startTime < r.EndAt &&
@@ -91,7 +96,7 @@ public class ReservationsController : ControllerBase
                 return BadRequest("指定された時間帯は、既に他の予約が入っています。");
             }
 
-
+            // 登録用のエンティティを作成
             Reservation newInput = new()
             {
                 ConferenceName = input.ConferenceName,
@@ -100,6 +105,7 @@ public class ReservationsController : ControllerBase
                 ReservationName = input.ReservationName,
             };
 
+            // 予約を登録
             await _reservation.PostInsert(newInput);
 
             _logger.LogInformation("予約登録成功");
@@ -118,6 +124,7 @@ public class ReservationsController : ControllerBase
     {
         try
         {
+            // 指定IDの予約を削除
             bool deleted = await _reservation.DeleteAsync(id);
             if (!deleted)
             {
