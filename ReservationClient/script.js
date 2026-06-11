@@ -1,6 +1,7 @@
 const API_URL = 'https://localhost:7119/api/reservations';
 let allReservations = [];
 let pollingTimer = null; 
+const tbody = document.getElementById('reservationList'); 
 const today = new Date().toLocaleDateString("ja-JP", { timeZone: "Asia/Tokyo" ,
         year: "numeric",  // 年を数字で（2026）
         month: "2-digit", // 月を2桁で（06）
@@ -41,29 +42,32 @@ function startPolling(intervalMs) {
 window.addEventListener('beforeunload', () => {
     if (pollingTimer) clearInterval(pollingTimer);
 });
+
 function filterDisplay() { 
-     const targetDate = document.getElementById('displayDate').value; 
-     const tbody = document.getElementById('reservationList'); 
-     const selectedData = allReservations 
-     if (selectedData.length === 0) { 
-         tbody.innerHTML = `<tr><td colspan="5">選択された日付（${targetDate}）の予約はありません。</td></tr>`;       
-         return; 
-     } 
-     tbody.innerHTML = selectedData.map(item => { 
-     return `
-     <tr>
-     <td><strong>${item.conferenceName}</strong></td> 
-     <td>${item.startAt.split('T')[1].slice(0, 5)} - ${item.endAt.split('T')[1].slice(0, 5)}</td> 
-     <td>${item.reservationName}</td> 
-     <td><button class="btn btn-danger" onclick="deleteReservation(${item.id})">削除</button></td> </tr> `;
-     }).join(''); 
+    const targetDate = document.getElementById('displayDate').value; 
+    const selectedData = allReservations 
+    if (selectedData.length === 0) { 
+        tbody.innerHTML = `<tr><td colspan="4">選択された日付（${targetDate}）の予約はありません。</td></tr>`;       
+        return; 
+    } 
+    tbody.innerHTML = selectedData.map(item => { 
+    return `
+    <tr>
+    <td>${item.conferenceName}</strong></td> 
+    <td>${item.startAt.split('T')[1].slice(0, 5)} - ${item.endAt.split('T')[1].slice(0, 5)}</td> 
+    <td>${item.reservationName}</td> 
+    <td><button class="btn btn-danger" onclick="deleteReservation(${item.id})">削除</button></td> </tr> `;
+    }).join(''); 
 } 
 
 async function loadReservations() {
+    const dateInput = document.getElementById('displayDate');
+    if (!dateInput.checkValidity()){
+        tbody.innerHTML = `<tr><td colspan="4">2026/06/09以降を指定してください。</td></tr>`;     
+        return; 
+    }
+    const displayDate = dateInput.value;
     clearMessage();
-    const displayDate = document.getElementById('displayDate').value;
-    if (!displayDate) return;
-
     try {
         // コントローラーの [FromQuery] DateOnly date に合わせてパラメータを付与
         const response = await fetch(`${API_URL}?date=${displayDate}`, {
@@ -132,7 +136,6 @@ async function createReservation(event) {
             document.getElementById('endTime').value = '';
             loadReservations(); 
         }
-
     } catch (error) {
         console.error("POST追加エラー:", error);
     }
@@ -155,10 +158,10 @@ async function deleteReservation(id) {
 }
 
 // 表示日付（display-date）が変更されたら、自動でその日の予約一覧をリロードする
-document.getElementById('displayDate').addEventListener('change', loadReservations);
+document.getElementById('displayDate').addEventListener('blur', loadReservations);
 
 // クリックしたらcreateReservationを読み込む
 const Form = document.getElementById('reservationForm');
-if (Form) Form.addEventListener('submit', createReservation);
+if (Form) Form.addEventListener('change', createReservation);
 
 initApp();

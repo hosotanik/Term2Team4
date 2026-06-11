@@ -18,8 +18,8 @@
     <div class="row g-4 mt-3 mx-2">
         <div class="col-md-8">
             <div class="card mb-3 card-body">
-                <label class="form-label">表示する日付を選択</label>
-                <input type="date" id="displayDate" class="form-control" onchange="filterDisplay()" min="1753-01-01" max="9999-12-31">
+                <label class="form-label">表示する日付を選択(2026/06/09以降を選択してください)</label>
+                <input type="date" id="displayDate" class="form-control" onchange="filterDisplay()" min="2026-06-09" max="9999-12-31" required>
             </div>
             <table class="table table-bordered table-striped">
                 <thead class="table-secondary">
