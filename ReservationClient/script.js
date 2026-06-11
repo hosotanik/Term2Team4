@@ -66,7 +66,7 @@ async function loadReservations() {
         return; 
     }
     const displayDate = dateInput.value;
-    clearMessage();
+    //clearMessage();
     try {
         // コントローラーの [FromQuery] DateOnly date に合わせてパラメータを付与
         const response = await fetch(`${API_URL}?date=${displayDate}`, {
@@ -161,6 +161,9 @@ document.getElementById('displayDate').addEventListener('blur', loadReservations
 
 // クリックしたらcreateReservationを読み込む
 const Form = document.getElementById('reservationForm');
-if (Form) Form.addEventListener('submit', createReservation);
+if (Form){
+    Form.addEventListener('submit', createReservation);
+    Form.addEventListener('input', clearMessage); 
+}
 
 initApp();
