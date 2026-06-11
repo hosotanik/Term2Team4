@@ -43,7 +43,7 @@ window.addEventListener('beforeunload', () => {
     if (pollingTimer) clearInterval(pollingTimer);
 });
 
-function filterDisplay() { 
+function filterDisplay(targetDate) { 
     const selectedData = allReservations 
     if (selectedData.length === 0) { 
         tbody.innerHTML = `<tr><td colspan="4">選択された日付（${targetDate}）の予約はありません。</td></tr>`;       
@@ -76,7 +76,7 @@ async function loadReservations() {
 
         if (response.ok) { 
             allReservations = await response.json(); 
-            filterDisplay();
+            filterDisplay(displayDate);
         } 
 
     } catch (error) {
@@ -161,6 +161,6 @@ document.getElementById('displayDate').addEventListener('blur', loadReservations
 
 // クリックしたらcreateReservationを読み込む
 const Form = document.getElementById('reservationForm');
-if (Form) Form.addEventListener('change', createReservation);
+if (Form) Form.addEventListener('submit', createReservation);
 
 initApp();
