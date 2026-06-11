@@ -24,6 +24,12 @@ public class ReservationsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetReservations([FromQuery] string date)
     {
+        if (DateTime.Parse(date) < new DateTime(2026, 6, 9))
+        {
+            _logger.LogWarning("不正な日付が指定されました");
+            return BadRequest("2026-06-09以降にしてください");
+        }
+
         try
         {
             _logger.LogInformation("予約一覧取得開始");
@@ -35,6 +41,7 @@ public class ReservationsController : ControllerBase
         }
         catch
         {
+            _logger.LogError("予約一覧取得失敗");
             return StatusCode(500 , "予約一覧を取得できませんでした");
         }
     }
@@ -103,6 +110,7 @@ public class ReservationsController : ControllerBase
         }
         catch
         {
+            _logger.LogError("予約登録失敗");
             return StatusCode(500, "予約登録できませんでした");
         }
     }
@@ -125,6 +133,7 @@ public class ReservationsController : ControllerBase
         }
         catch
         {
+            _logger.LogError("削除失敗");
             return StatusCode(500, "削除失敗しました");
         }
     
