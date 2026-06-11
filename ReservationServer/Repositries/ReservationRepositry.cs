@@ -90,6 +90,7 @@ public class ReservationRepositry : IReservationRepositry
             {
                 int count = await connection.ExecuteAsync("DELETE FROM reservation WHERE Id = @Id;", new { Id = id });
 
+                // 1以上であればtrue 0であればfalseを返す
                 return count > 0;
             }
             catch(Exception ex)
