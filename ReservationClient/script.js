@@ -157,7 +157,7 @@ async function deleteReservation(id) {
 }
 
 // 表示日付（display-date）が変更されたら、自動でその日の予約一覧をリロードする
-document.getElementById('displayDate').addEventListener('blur', loadReservations);
+document.getElementById('displayDate').addEventListener('change', loadReservations);
 
 const Form = document.getElementById('reservationForm');
 if (Form){
